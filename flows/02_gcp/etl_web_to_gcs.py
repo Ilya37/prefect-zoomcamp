@@ -3,6 +3,7 @@ import pandas as pd
 from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
 from random import randint
+import os.path
 
 
 @task(retries=3)
@@ -28,8 +29,10 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
 
 @task()
 def write_local(df: pd.DataFrame, color: str, dataset_file: str) -> Path:
+    save_path = f"D:/Study/prefect-zoomcamp/data/{color}/"
     """Write DataFrame out locally as parquet file"""
-    path = Path(f"data/{color}/{dataset_file}.parquet")
+    path = os.path.join(save_path, f"{dataset_file}.parquet") 
+    # path = Path(f"data/{color}/{dataset_file}.parquet")
     df.to_parquet(path, compression="gzip")
     return path
 

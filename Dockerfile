@@ -1,4 +1,4 @@
-FROM prefecthq/prefect:2.7.7-python3.9
+FROM prefecthq/prefect:2-python3.10-conda
 
 COPY docker-requirements.txt .
 
